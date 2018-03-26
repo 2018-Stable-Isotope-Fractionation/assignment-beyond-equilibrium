@@ -285,7 +285,7 @@ p_1c</code></pre>
 </div>
 <div id="non-steady-state-systems" class="section level1">
 <h1>2. Non steady-state systems</h1>
-<p>The following system simulates a cow eating a meal and then digesting it happily and converting it into biomass, respired CO2 and microbial fermentation products (some of which the cow can use, some of which are just excreeted as microbial biomass and most of which are reworked to CO2 and methane by the microbial community). Here, we are using the custom package <code>isocyclr</code> just to make it easier to set up the whole system and run a simulation. All reaction kinetics are modeled as first order kinetics from the precursor pool with the same rate constant <code>k</code>.</p>
+<p>The following system simulates a cow eating a meal and then digesting it happily and converting it into biomass, respired CO2 and microbial fermentation products (some of which the cow can use, some of which are just excreeted as microbial biomass and most of which are reworked to CO2 and methane by the microbial community). Here, we are using the custom package <a href="https://github.com/sebkopf/isocyclr"><code>isocyclr</code></a> just to make it easier to set up the whole system and run a simulation. All reaction kinetics are modeled as first order kinetics from the precursor pool with the same rate constant <code>k</code>.</p>
 <pre class="r"><code>library(isocyclr)
 
 cow &lt;- isopath() %&gt;% 

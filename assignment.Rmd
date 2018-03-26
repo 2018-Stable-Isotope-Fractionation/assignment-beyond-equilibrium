@@ -16,6 +16,7 @@ editor_options:
 ```{r "load packages", include=FALSE}
 library(tidyverse)
 library(latex2exp)
+knitr::opts_chunk$set(eval = FALSE)
 ```
 
 # 1. Isotope flux at steady-state
@@ -77,7 +78,7 @@ p_1c
 
 # 2. Non steady-state systems
 
-The following system simulates a cow eating a meal and then digesting it happily and converting it into biomass, respired CO2 and microbial fermentation products (some of which the cow can use, some of which are just excreeted as microbial biomass and most of which are reworked to CO2 and methane by the microbial community). Here, we are using the custom package `isocyclr` just to make it easier to set up the whole system and run a simulation. All reaction kinetics are modeled as first order kinetics from the precursor pool with the same rate constant `k`.
+The following system simulates a cow eating a meal and then digesting it happily and converting it into biomass, respired CO2 and microbial fermentation products (some of which the cow can use, some of which are just excreeted as microbial biomass and most of which are reworked to CO2 and methane by the microbial community). Here, we are using the custom package [`isocyclr`](https://github.com/sebkopf/isocyclr) just to make it easier to set up the whole system and run a simulation. All reaction kinetics are modeled as first order kinetics from the precursor pool with the same rate constant `k`.
 
 ```{r, message=FALSE, warning=FALSE, fig.width = 10, fig.height = 6, eval = TRUE}
 library(isocyclr)
