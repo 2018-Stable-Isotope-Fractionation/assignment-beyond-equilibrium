@@ -16,7 +16,6 @@ editor_options:
 ```{r "load packages", include=FALSE}
 library(tidyverse)
 library(latex2exp)
-knitr::opts_chunk$set(eval = FALSE)
 ```
 
 # 1. Isotope flux at steady-state
@@ -29,7 +28,7 @@ knitr::include_graphics("C3_metabolism.png")
 
 ## 1A: $C_{org}$ node
 
-Write out the rate of change equations for the $C_{org}$ node and use the assumption of steady-state to find an expression for $\delta^{13}CO_{2,inside}$ as a function of $\delta^{13}C_{org}$ and $\epsilon_{fix}$. *Note: no need to use latex type-setting if you're not familiar with it already, find to just out the equations in regular terms*.
+Write out the rate of change equations for the $C_{org}$ node and use the assumption of steady-state to find an expression for $\delta^{13}CO_{2,inside}$ as a function of $\delta^{13}C_{org}$ and $\epsilon_{fix}$. 
  
 
 $$
@@ -120,7 +119,7 @@ cow %>% generate_reaction_diagram(add_arrows = T)
 
 Based on this reaction schematic and the different flux proportions and isotopic effects indicated in the above reactions, draw a diagram for this system labeling the pools (like in the diagram in the previous problem), the relative fluxes, and the formulas for the isotopic composition of the fluxes. (*Note: name the file `cow_solution.jpg` or `cow_solution.png` - totally sufficient to take a picture of your sketch with an in-focus phone camera and upload the picture into this assignment repository.*).
 
-```{r, out.width = "100%", echo=FALSE, eval=TRUE}
+```{r, out.width = "100%", echo=FALSE}
 if (file.exists("cow_solution.png"))
   knitr::include_graphics("cow_solution.png")
 if (file.exists("cow_solution.jpg"))
