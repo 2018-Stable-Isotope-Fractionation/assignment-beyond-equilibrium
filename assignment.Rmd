@@ -16,7 +16,6 @@ editor_options:
 ```{r "load packages", include=FALSE}
 library(tidyverse)
 library(latex2exp)
-knitr::opts_chunk$set(eval = FALSE)
 ```
 
 # 1. Isotope flux at steady-state
