@@ -1,5 +1,6 @@
 ---
 title: "Beyond Equilibrium Systems"
+subtitle: "Solutions"
 date: "`r format(Sys.Date(), '%d %b %Y')`"
 output:
   html_document: 
@@ -20,64 +21,130 @@ library(latex2exp)
 
 # 1. Isotope flux at steady-state
 
-The following schematic depicts the overarching metabolic flux diagram typically invoked for C3 type carbon fixation in many plants and photosynthetic microorganisms. Here we will derive the steady-state solution for this system to interrogate the impact of key parameter $r=\frac{\phi_{out}}{\phi_{in}}$ (the ratio of the flux of CO2 into and out of the cell, also known as the reversibility or degree of equilibration of the first step in this reaction network).
+The following schematic shows C4 type carbon fixation. The difference to C3 type carbon fixation is that CO2 is first bound to phosphoenolpyruvate (PEP) as bicarbonate in mesophyll cells to form oxaloacetate (OA). This makes it efficient to capture and transport the carbon to the bundle sheath cells where it is released again and can be fixed by RuBisCO in the Calvin cycle (same process in C3 photosynthesis) into biomass (the OA gets recycled back to PEP to capture more CO2 in the mesophyll cells). Because of this mechanism, the overall carbon fixation isotope effect can be quite different from C3-type photosynthesis despite the fact that both use the same enzyme to fix CO2 into biomass (RuBisCO). 
 
 ```{r, out.width = "100%", echo=FALSE, eval=TRUE}
-knitr::include_graphics("C3_metabolism.png") 
+knitr::include_graphics("https://upload.wikimedia.org/wikipedia/commons/thumb/2/26/C4_photosynthesis_NADP-ME_type_en.svg/2560px-C4_photosynthesis_NADP-ME_type_en.svg.png") 
+```
+
+Here we will derive the steady-state solution for this system to interrogate the impact of key parameters $r=\frac{\phi_{out}}{\phi_{in}}$ (the ratio of the flux of CO2 into and out of the mesophyll cells, i.e. CO2 exchange) and $L=\frac{\phi_{leak}}{\phi_{PEP}}$ (the ratio of CO2 leakage flux out of the bundle sheath cells vs. flux of CO2 captured by PEP). The following schematic depicts the overarching metabolic flux diagram typically invoked for C4 type carbon fixation with fractionation factors $\epsilon_{diff, air}$ (kinetic fractionation for diffusion of CO2 gas into/out of the pore space of the mesophyll cells), $\epsilon_{diff, H2O}$ (kinetic fractionation for diffusion of CO2 in water inside the cells), $\epsilon_{HCO2/CO2}$ (equilibrium fractionation between bicarbonate and CO2), $\epsilon_{PEP}$ (enzymatic fractionation when PEP binds bicarbonate), and $\epsilon_{fix}$ (enzymatic fractionation of CO2 fixation by RuBisCO):
+
+```{r, out.width = "100%", echo=FALSE, eval=TRUE}
+knitr::include_graphics("C4_metabolism.png") 
 ```
 
 ## 1A: $C_{org}$ node
 
-Write out the rate of change equations for the $C_{org}$ node and use the assumption of steady-state to find an expression for $\delta^{13}CO_{2,inside}$ as a function of $\delta^{13}C_{org}$ and $\epsilon_{fix}$. 
+Write out the rate of change equations for the $C_{org}$ node and use the assumption of steady-state to find an expression for $\delta^{13}CO_{2,bsc}$ (CO2 in the bundle sheath cells) as a function of $\delta^{13}C_{org}$ and $\epsilon_{fix}$. 
  
 
 $$
 \begin{aligned}
- \frac{d[C_{org}]}{dt} &= 
- \\
- \frac{d([C_{org}] \delta^{13}C_{org})}{dt} &= 
- \\
- \rightarrow \delta^{13}CO_{2,inside} &=  
+ \frac{d[C_{org}]}{dt} &= \\
+ \frac{d([C_{org}] \delta^{13}C_{org})}{dt} &= \\
+ \rightarrow \delta^{13}CO_{2,bsc} &= 
 \end{aligned}
 $$
  
  
  
-## 1B: $CO_{2,inside}$ node
+## 1B: $CO_{2,bsc}$ node
  
-Write out the rate of change equations for the $\delta^{13}CO_{2,inside}$ node and use the assumption of steady-state as well as the equation for $\delta^{13}CO_{2,inside}$ derived above, to find an expression for the overall fractionation between the resulting organic material and the isotopic composition of the CO2 outside the cell $\epsilon_{org/CO_2} = \delta^{13}C_org - \delta^{13}CO_{2,outside}$. *Hint: this expression should only be a function of the parameters $\epsilon_{diff}$ (isotopic effect of CO2 diffusion across the membrane), $\epsilon_{fix}$ (isotopic effect of CO2 fixation) and $r$ (the reversibility mentioned earlier); also, with the fluxes already provided in terms of net flux $\phi_{net}$, you will not need the mass flux equation to solve this question.*
+Write out the rate of change equations for the $\delta^{13}CO_{2,bsc}$ node (CO2 in bundle sheath cells) and use the assumption of steady-state as well as the equation for $\delta^{13}CO_{2,bsc}$ derived above, to find an expression for $\delta^{13}CO_{2,mpc}$ as a function of $\delta^{13}C_{org}$, fractionation factors $\epsilon_{fix}$, $\epsilon_{HCO3/CO2}$, $\epsilon_{PEP}$, and $\epsilon_{diff, H2O}$, and leakage $L$. 
+
+> Hint: with the fluxes already provided in terms of net flux $\phi_{net}$, you will not need the mass flux equation to solve this.
 
 $$
 \begin{aligned}
-  \frac{d[CO_{2,in}] \delta^{13}CO_{2,in}}{dt} &= 
-\\
-  \rightarrow \epsilon_{org/CO_2} = \delta^{13}C_{org} - \delta^{13}CO_{2,out} &=
+  \frac{d[CO_{2,bsc}] \delta^{13}CO_{2,bsc}}{dt} &= \\
+  \rightarrow \delta^{13}CO_{2,mpc} &= 
 \end{aligned}
 $$
 
-## 1C: The effects of reversibility
+## 1C: $CO_{2,mpc}$ node
+ 
+Lastly, write out the rate of change equations for the $\delta^{13}CO_{2,mpc}$ node (mesophyll cells) and use the assumption of steady-state as well as the equations for $\delta^{13}CO_{2,mpc}$ and $\delta^{13}CO_{2,bsc}$ derived above, to find an expression for $\delta^{13}CO_{2,atm}$ as a function of $\delta^{13}C_{org}$, fractionation factors $\epsilon_{fix}$, $\epsilon_{HCO3/CO2}$, $\epsilon_{PEP}$, $\epsilon_{diff, H2O}$ and $\epsilon_{diff,air}$, leakage $L$, and reversibility $r$. Use this to show that $\delta^{13}C_{org} - \delta^{13}CO_{2,atm} = \epsilon_{diff,air} + r \cdot (\epsilon_{HCO3/CO2} + \epsilon_{PEP} + L \cdot (\epsilon_{fix} - \epsilon_{diff, H2O}))$ (this is the effective fractionation between organic matter and atmospheric CO2 $\epsilon_{org/CO_2}$).
 
-The isotopic effect of diffusion ($\epsilon_{diff}$) at 25 Celsius is -0.7‰ and the typical value for the isotpic effect of carbon fixation ($\epsilon_{fix}$) in marine phytoplankton is -25‰. Calculate the overall isotope effect $\epsilon_{org/CO_2}$ and plot it vs. reversibility `r` (from 0 to 1 or 0% to 100%). Store the resulting data frame in variable `df_1c` (with, at minimum, columns `r` and `eps_org_co2`) and the plot in `p_1c`.
+> Hint: again, with the fluxes already provided in terms of net flux $\phi_{net}$, you will not need the mass flux equation to solve this. Also, you can simplify the initial equation by recognizing that at steady-state the terms describing the flux **out of** the $\delta^{13}CO_{2,mpc}$ node are the same terms describing the flux **into** the $\delta^{13}CO_{2,bsc}$ node (and thus can be set equal to the flux term **out of** the $\delta^{13}CO_{2,bsc}$ node). 
 
-What is the largest and smallest possible isotope effect and how does it relate to reversibility? 
+$$
+\begin{aligned}
+  \frac{d[CO_{2,mpc}] \delta^{13}CO_{2,mpc}}{dt} &= \\
+\rightarrow \delta^{13}CO_{2,atm} &= \\
+\rightarrow \epsilon_{org/CO_2} = \delta^{13}C_{org} - \delta^{13}CO_{2,atm} &= 
+\end{aligned}
+$$
 
-When do you think the two end-members are most likely to occur?
 
+## 1D: The effects of reversibility in C3 and C4 plants
+
+Compare the effect of reversibility ($r$, from 0 to 1 - 0% to 100%) in C3 and C4 plants (equations summarized below) on $\epsilon_{org/CO_2}$ with the following fractionation factors (common values at 25C). For this exercise, assume C4 plants are perfectly efficient with no leakage from the bundle sheath cells ($L=0$). Store the resulting tibble in variable `df_1d` (with, at minimum, columns `r`, `C3_eps_org_vs_atm` and `C4_eps_org_vs_atm`) and make a plot of $C3_eps_org_vs_atm$ and $C4_eps_org_vs_atm$ (use `pivot_longer`) vs. `r` stored in variable `p_1d`.
+
+Based on the plot, answer the following discussion question:
+
+**How does CO2 exchange (reversibility parameter `r`) affect the net fractionation in C3 and C4 plants?**
 
 ```{r}
-df_1c <- 
-  data_frame(
+tibble(
+  eps_HCO3_CO2 = 7.9, # in permil
+  eps_PEP = -2.2, # in permil
+  eps_diff_water = -0.8, # in permil
+  eps_diff_air = -4.4, # in permil
+  eps_fix = -25 # in permil
+)
+```
+
+$$
+\begin{aligned}
+\text{C3}:&\\
+&\epsilon_{org/CO_2} = 
+  \delta^{13}C_{org} - \delta^{13}CO_{2,atm} = 
+  \epsilon_{diff,air} + r \cdot (\epsilon_{fix} - \epsilon_{diff,air}) \\
+\text{C4}:&\\
+&\epsilon_{org/CO_2} = 
+  \delta^{13}C_{org} - \delta^{13}CO_{2,atm} = 
+  \epsilon_{diff,air} + r \cdot (\epsilon_{HCO3/CO2} + \epsilon_{PEP} + L \cdot (\epsilon_{fix} - \epsilon_{diff, H2O}) - \epsilon_{diff,air})
+\end{aligned}
+$$
+
+```{r}
+df_1d <- 
+  tibble(
     ?
   )
 
-p_1c <- ?
-p_1c
+p_1d <- ?
+p_1d
+```
+
+## 1E: The effects of leakage (L) in C4 plants
+
+Although C4 plants are highly efficient, they are not 100% so and some of the CO2 captured by PEP and delivered to RuBisCO can escape back out of the cells without getting fixed. This means that the leakage $L$ in most real C4 plants is > 0 (e.g. corn has about $L=0.27$). Repeat the calculations from the previous exercise ($r$ from 0 to 1 for both C3 and C4 plants) but with four different leakage scenarios ($L$ = 0, 0.27, 0.41 and 1). Store the resulting tibble in variable `df_1e` (with, at minimum, columns `r`, `L`, `C3_eps_org_vs_atm` and `C4_eps_org_vs_atm`) and make a plot of $C3_eps_org_vs_atm$ and $C4_eps_org_vs_atm$ (use `pivot_longer`) vs. `r` with an aesthetic for $L$ (recommend `linetype`, especially if you are already using color to for C3 vs C4) stored in variable `p_1e`. Hint: use `crossing(r = seq(0, 1, by = 0.1), L = c(0, 0.27, 0.41, 1))` to generate all combinations of `r` and `L`; use `factor(L)` to turn the number into a discrete variable for aesthetic mapping.
+
+Based on the plot, answer the following discussion question:
+
+**How does leakage (`L`) affect the net fractionation in C3 and C4 plants?**
+
+```{r}
+df_1e <- ?
+
+p_1e <- ?
+
+p_1e
+```
+
+## 1F: which is C3 and which is C4?
+
+Farquhar et al., 1989 plotted a similar graph (reversibility vs. net fractionation) for different plants. Note that normal fractionation factors are plotted as positive values, i.e. opposite to the exercises above. The CO2 exchange/reversibility (x-axis) is measured in terms of internal (Pi) vs. external (Pa) partial pressure of CO2 which is functionality equivalent to reversibility $r$ in the exercises above (since CO2 diffusion in and out of the plant is driven solely by the pressure gradient). Which plant(s) are C3 and which plant(s) are C4? Clearly explain your reasoning based on these data.
+
+```{r, out.width = "100%", echo=FALSE, eval=TRUE}
+knitr::include_graphics("farquhar_figure.png") 
 ```
 
 
 # 2. Non steady-state systems
 
-The following system simulates a cow eating a meal and then digesting it happily and converting it into biomass, respired CO2 and microbial fermentation products (some of which the cow can use, some of which are just excreeted as microbial biomass and most of which are reworked to CO2 and methane by the microbial community). Here, we are using the custom package [`isocyclr`](https://github.com/sebkopf/isocyclr) just to make it easier to set up the whole system and run a simulation. All reaction kinetics are modeled as first order kinetics from the precursor pool with the same rate constant `k`.
+The following system simulates a cow eating a meal and then digesting it happily and converting it into biomass, respired CO2 and microbial fermentation products (some of which the cow can use, some of which are just excreeted as microbial biomass and most of which are reworked to CO2 and methane by the microbial community). Here, we are using the custom package `isocyclr` just to make it easier to set up the whole system and run a simulation. All reaction kinetics are modeled as first order kinetics from the precursor pool with the same rate constant `k`.
 
 ```{r, message=FALSE, warning=FALSE, fig.width = 10, fig.height = 6, eval = TRUE}
 library(isocyclr)
@@ -138,7 +205,7 @@ Now that the system is set up, we will use it to numerically run through the sce
 ```{r, fig.height=8, fig.width=10, echo=FALSE, message=FALSE, eval=TRUE}
 cow <- cow %>%
   set_parameters(
-    data_frame(
+    tibble(
       # rate constant
       k = 0.01,
       # initial pool sizes
@@ -159,11 +226,11 @@ result <- cow %>%
 bind_rows(
   # combine isotope information
   result %>% 
-    gather(pool, value, ends_with("d13C")) %>%
+    pivot_longer(names_to="pool", values_to="value", cols = ends_with("d13C")) %>%
     mutate(pool = sub(".d13C", "", pool), variable = "d13C [permil]"),
   # with the pool sizes
   result %>% 
-    gather(pool, value, -time, -k, -food, -ends_with("13C")) %>%
+    pivot_longer(names_to="pool", values_to="value", cols = c(-time, -k, -food, -ends_with("13C"))) %>%
     mutate(variable = "pool size [%]")) %>%
   # plot everything
   ggplot() +
@@ -195,7 +262,9 @@ df_2c
 ```
 
 
-# 3. Mass scaling laws and mass-independent isotope effects
+# 3. OPTIONAL: Mass scaling laws and mass-independent isotope effects
+ 
+> Note: if you want to enable the code-checks for this question, change the `if (FALSE)` to `if (TRUE)` in the last code chunk of this file.
  
 Isotope effects for systems with more than 2 isotopes usually scale in certain way between multiple isotopes. Usually this scaling number is called the **mass scaling factor** or **coefficient** and designated by the letter $\kappa$, $\lambda$ or (most confusingly) $\beta$. We'll definitely avoid the last one because this is _not_ the same as the reduced partition function ratio and instead settle on $\lambda$ for this exercise (but you may encounter the others in the literature).
 
@@ -296,7 +365,7 @@ $$
 \end{align}
 $$
 
-For each scenario you calculated in part C, calculate and plot the  $\Delta^{33}S$ (*1000 to illustrate in ‰) vs. $\delta^{34}S$ with all 4 definitions of $\Delta$ (use the standard mass scaling for sulfur-33 for the $\Delta$ calculations of $\lambda$ = 0.515). Store the resulting data frame in `df_3d` with (at minimum) new columns `D33_1`, `D33_2`, `D33_3`, `D33_4` (for the 4 definitions) and the plot in `p_3d`. Hin: use `gather(..., starts_with("D33"))` for easy plotting. 
+For each scenario you calculated in part C, calculate and plot the  $\Delta^{33}S$ (*1000 to illustrate in ‰) vs. $\delta^{34}S$ with all 4 definitions of $\Delta$ (use the standard mass scaling for sulfur-33 for the $\Delta$ calculations of $\lambda$ = 0.515). Store the resulting data frame in `df_3d` with (at minimum) new columns `D33_1`, `D33_2`, `D33_3`, `D33_4` (for the 4 definitions) and the plot in `p_3d`. Hint: use `gather(..., starts_with("D33"))` for easy plotting. 
 
 For all 3 scenarios, comment on what you would expect $\Delta^{33}S$ to be (qualitatively, i.e. 0, positive, negative?) and what you observe for the 4 definitions of $\Delta$. Which definitions are problematic to use?
 
@@ -308,33 +377,35 @@ p_3d <- ?
 p_3d
 ```
 
-
-
 # 5. Code checks
 
-> The following are automated tests for Travis. Run the chunk to see if your code is complete and passes all the tests. The chunk will stop at the first test that does not pass. If you get an error, see if you can figure out what might be missing in your code (do not edit this chunk!). Once all tests run without errors, the file knits successfully (`Knit to HTML` in the `Knit` menu), and your code passes linting (`Lint current file` command from the `Addins` menu) without warnings, your assignment is ready for submission.
+> The following are automated tests. Run the chunk to see if your code is complete and passes all the tests. The chunk will stop at the first test that does not pass. If you get an error, see if you can figure out what might be missing in your code. Once all tests run without errors, the file knits successfully (`Knit to HTML` in the `Knit` menu), your assignment is ready for submission.
 
 ```{r "tests", echo = FALSE, warning=FALSE, message=FALSE}
 source(file.path("libs", "test_functions.R"))
 
 # 1
-expect_names("1C", df_1c, c("r", "eps_org_co2"))
-expect_class("1C", p_1c, "ggplot")
+expect_names("1D", df_1d, c("r", "C3_eps_org_vs_atm", "C4_eps_org_vs_atm"))
+expect_class("1D", p_1d, "ggplot")
+expect_names("1E", df_1e, c("r", "L", "C3_eps_org_vs_atm", "C4_eps_org_vs_atm"))
+expect_class("1E", p_1e, "ggplot")
 
 # 2
 expect_true(file.exists("cow_solution.jpg") || file.exists("cow_solution.png"))
 expect_names("2C", df_2c, c("mass", "isotopes"))
 
-# 3
-expect_func_value("3A", calc_eq_scaling, 0.515, list(32, 33, 34), dec = 3)
-expect_func_value("3A", calc_kin_scaling, 0.508, list(32, 33, 34), dec = 3)
-expect_names("3B", df_3b, 
-             c("eps34", "alpha34", "alpha33", "delta34", "delta33"))
-expect_class("3B", p_3b, "ggplot")
-expect_names("3C", df_3c, c("new_delta34", "new_delta33"))
-expect_class("3C", p_3c, "ggplot")
-expect_names("3D", df_3d, c("D33_1", "D33_2", "D33_3", "D33_4"))
-expect_class("3D", p_3d, "ggplot")
+# 3 change to if (TRUE) to enable
+if (FALSE) {
+  expect_func_value("3A", calc_eq_scaling, 0.515, list(32, 33, 34), dec = 3)
+  expect_func_value("3A", calc_kin_scaling, 0.508, list(32, 33, 34), dec = 3)
+  expect_names("3B", df_3b,
+               c("eps34", "alpha34", "alpha33", "delta34", "delta33"))
+  expect_class("3B", p_3b, "ggplot")
+  expect_names("3C", df_3c, c("new_delta34", "new_delta33"))
+  expect_class("3C", p_3c, "ggplot")
+  expect_names("3D", df_3d, c("D33_1", "D33_2", "D33_3", "D33_4"))
+  expect_class("3D", p_3d, "ggplot")
+}
 ```
 
 
