@@ -1,6 +1,5 @@
 ---
 title: "Beyond Equilibrium Systems"
-subtitle: "Solutions"
 date: "`r format(Sys.Date(), '%d %b %Y')`"
 output:
   html_document: 
